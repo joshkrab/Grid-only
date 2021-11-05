@@ -1,0 +1,474 @@
+//<МИКСИНЫ>===============================================================================================
+@import "mixins.scss";
+//</МИКСИНЫ>===============================================================================================
+
+//<ШРИФТЫ>===============================================================================================
+
+//<Подключаем шрифты>=======================================================================================
+
+//</Подключаем шрифты>=======================================================================================
+
+//<Иконочные шрифты>==========================================================================================
+
+//</Иконочные шрифты>==========================================================================================
+
+//<Шрифт по умолчанию>==========================================================================================
+$fontfamily: "lato";
+//</Шрифт по умолчанию>==========================================================================================
+
+//</ШРИФТЫ>=======================================================================================================
+
+//<ПЕРЕМЕННЫЕ>===========================================================================================================
+$minwidth: 320px;
+$mw: 1170;
+$md1: $mw + 12;
+$md2: 991.98;
+$md3: 767.98;
+$md4: 479.98;
+//</ПЕРЕМЕННЫЕ>===========================================================================================================
+
+//<ОБНУЛЕНИЕ, ОБЩИЕ ПАРАМЕТРЫ>===============================================================================================
+@import "null.scss";
+body {
+	color: #fff;
+	background-color: rgb(53, 50, 50);
+	font-size: 14px;
+	&.lock {
+		overflow: hidden;
+	}
+}
+//</ОБНУЛЕНИЕ, ОБЩИЕ ПАРАМЕТРЫ>===============================================================================================
+
+//<ОБОЛОЧКА>===========================================================================================================
+
+// Grid контейнер:
+.wrapper {
+	width: 100%;
+	// Делаем на всю высоту экрана
+	min-height: 100%;
+	overflow: hidden;
+	// &.loaded {
+	// }
+
+	// Делаем грид-контенер:
+	display: grid;
+
+	// Выстраиваем сетку:
+	grid-template: [start] minmax(100px, auto) [row2] 1fr [row3] minmax(80px, auto) [row-end] / 1fr;
+
+	// Называем грид элементы:
+	grid-template-areas:
+		"header"
+		"main"
+		"footer";
+}
+//</ОБОЛОЧКА>===========================================================================================================
+
+//<ОСНОВНАЯ СЕТКА>===========================================================================================================
+.container {
+	max-width: $mw + px;
+	margin: 0 auto;
+	width: 100%;
+	@media (max-width: $md1+px) {
+		max-width: 970px;
+	}
+	@media (max-width: $md2+px) {
+		max-width: 750px;
+	}
+	@media (max-width: $md3+px) {
+		max-width: none;
+		padding: 0 10px;
+	}
+}
+//</ОСНОВНАЯ СЕТКА>===========================================================================================================
+
+//<ПОДКЛЮЧЕНИЕ ФАЙЛОВ UI СТИЛЕЙ, ФОРМ И ГОТОВЫХ КЛАССОВ>====================================================================================================
+@import "forms.scss";
+@import "ui.scss";
+//</ПОДКЛЮЧЕНИЕ ФАЙЛОВ UI СТИЛЕЙ, ФОРМ И ГОТОВЫХ КЛАССОВ>====================================================================================================
+
+//<ПОДКЛЮЧЕНИЕ ФАЙЛОВ СТИЛЕЙ СТРАНИЦ И ЭЛЕМЕНТОВ>====================================================================================================
+//@import "../../js/fancybox/jquery.fancybox.scss";
+//@import "datepicker.scss";
+//@import "fontawesome.scss";
+//@import "popover.min.scss";
+//@import "baguetteBox.scss";
+//@import "pagging.scss";
+//@import "icons.scss";
+@import "popup.scss";
+@import "header.scss";
+@import "footer.scss";
+@import "home.scss";
+//</ПОДКЛЮЧЕНИЕ ФАЙЛОВ СТИЛЕЙ СТРАНИЦ И ЭЛЕМЕНТОВ>====================================================================================================
+
+//<ОСНОВНОЙ БЛОК>====================================================================================================
+
+.header {
+	background-color: rgba(110, 236, 177, 0.2);
+	padding: 15px;
+
+	// Присваиваем грид-названия блокам, которые указали во врапере
+	grid-area: header;
+
+	// И строим свой грид-контейнер:
+	display: grid;
+
+	// Объявляем сетку:
+	grid-template: 1fr / 1fr minmax(auto, 200px) minmax(auto, 1100px) 1fr;
+
+	// Центрируем по вертикали:
+	align-items: center;
+
+	&__logo {
+		width: 70px;
+		height: 70px;
+		border-radius: 50%;
+		background-color: rgb(170, 170, 209);
+		transition: all 0.5s ease 0s;
+		&:hover {
+			transition: all 0.8s ease 0s;
+			background-color: rgb(119, 119, 160);
+		}
+
+		// Ставим лого во вторую колонку, для отступа слева
+		grid-column: 2 / 3;
+
+		display: grid;
+		// Центрируем иконку:
+		justify-content: center;
+		align-items: center;
+
+		// Центрируем грид элемент:
+		justify-self: center;
+		@media (max-width: 768px) {
+			justify-self: stretch;
+		}
+
+		img {
+			width: 110%;
+			height: 110%;
+			object-fit: cover;
+		}
+	}
+
+	&__menu {
+		grid-column: 3 / 4;
+	}
+
+	&__list {
+		display: grid;
+
+		// Используем авто заполнение:
+		grid-auto-flow: column;
+		justify-items: center;
+
+		li {
+			margin: 0px 0px 0px 30px;
+		}
+
+		@media (max-width: 768px) {
+			display: none;
+		}
+	}
+
+	&__link {
+		color: #fff;
+		font-size: 22px;
+		transition: all 0.3s ease 0s;
+		&:hover {
+			transition: all 0.5s ease 0s;
+			color: rgb(196, 164, 164);
+		}
+	}
+
+	position: relative;
+	&__burger {
+		@media (max-width: 768px) {
+			display: block;
+			position: absolute;
+			top: 50%;
+			margin: -10px 0px 0px 0px;
+			right: 30px;
+			width: 30px;
+			height: 18px;
+			cursor: pointer;
+			z-index: 5;
+			span {
+				@include anim(0.3s, 0s);
+				top: 8px;
+				left: 0px;
+				position: absolute;
+				width: 100%;
+				height: 2px;
+				background-color: #000;
+				&:first-child {
+					top: 0px;
+				}
+				&:last-child {
+					top: auto;
+					bottom: 0px;
+				}
+			}
+			&.active {
+				span {
+					@include scale(0);
+					&:first-child {
+						@include rotate(-45deg);
+						top: 8px;
+					}
+					&:last-child {
+						@include rotate(45deg);
+						bottom: 8px;
+					}
+				}
+			}
+		}
+	}
+}
+
+//====================================================================================================
+
+.main {
+	padding: 30px 15px;
+
+	// Адаптируем мобайл фест: переносим туда все грид свойства:
+	@media (min-width: 992px) {
+		// Задаем имя:
+		grid-area: main;
+
+		// Создаем контейнер:
+		display: grid;
+
+		// Объявляем сетку:
+		grid-template: 1fr / 1fr minmax(auto, 200px) minmax(auto, 1100px) 1fr;
+	}
+}
+.sidebar {
+	// Ставим сайдбар во вторую колонку, для отступа слева
+	grid-column: 2 / 3;
+
+	background-color: rgb(154, 160, 153, 0.2);
+	padding: 15px;
+	margin: 0px 0px 30px 0px;
+	text-align: center;
+	@media (min-width: 992px) {
+		text-align: start;
+		padding: 30px;
+		margin: 0;
+	}
+
+	&__list {
+		li {
+			margin: 0px 0px 45px 0px;
+			&:last-child {
+				margin: 0;
+			}
+		}
+	}
+
+	&__link {
+		color: rgb(255, 255, 255);
+		font-size: 30px;
+		transition: all 0.3s ease 0s;
+		&:hover {
+			transition: all 0.5s ease 0s;
+			color: rgb(196, 164, 164);
+		}
+	}
+}
+
+.content {
+	@media (min-width: 992px) {
+		grid-column: 3 / 4;
+		padding: 0px 0px 0px 15px;
+	}
+
+	&__title {
+		text-align: center;
+		font-style: italic;
+		font-size: 26px;
+		margin: 0px 0px 20px 0px;
+	}
+
+	&__gallery {
+		margin: 0px 0px 50px 0px;
+	}
+}
+
+.gallery {
+	&__title {
+		text-align: center;
+		text-transform: uppercase;
+		font-size: 26px;
+		margin: 0px 0px 20px 0px;
+	}
+
+	&__items {
+		display: grid;
+
+		// Отступ между ячейками:
+		gap: 10px;
+
+		// Строим сетку:
+		grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+	}
+
+	&__item {
+		position: relative;
+		padding: 0px 0px 85% 0px;
+
+		img {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+	}
+
+	&__item-big {
+		// Когда фото в одну колонку то фоты биг не занимают 4 ячейки
+		@media (min-width: 767px) {
+			grid-column: span 2;
+			grid-row: span 2;
+		}
+	}
+}
+
+//====================================================================================================
+
+.products {
+	&__title {
+		text-align: center;
+		text-transform: uppercase;
+		font-size: 26px;
+		margin: 0px 0px 20px 0px;
+	}
+
+	&__items {
+		display: grid;
+
+		// Отступ между ячейками:
+		column-gap: 30px;
+		row-gap: 50px;
+
+		// Задаем сетку:
+		grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+
+		// Если хотим, чтобы колонки имели одну высоту, по высоте самой большой
+		// Когда добавляем текст и тд,
+		// Колонки будут заполнять пространство и подстраиваться друг под друга
+		@media (min-width: 992px) {
+			// grid-auto-rows: 1fr;
+		}
+	}
+
+	&__item {
+		// Выстраиваем элементы в ряд колонками:
+		display: grid;
+
+		grid-auto-flow: row;
+
+		// Делаем сетку самой карточки
+		// Указываем размеры строк и одна колонка на всю ширину:
+		grid-template: auto 1fr minmax(40px, auto) / 1fr;
+
+		text-align: center;
+	}
+
+	&__image {
+		position: relative;
+		padding: 0px 0px 90% 0px;
+		margin: 0px 0px 20px 0px;
+
+		img {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+
+			object-fit: cover;
+		}
+	}
+
+	&__name {
+		font-size: 24px;
+		line-height: 30px;
+		color: #fff;
+		text-align: center;
+
+		margin: 0px 0px 20px 0px;
+	}
+
+	&__button {
+		color: #fff;
+		background-color: rgb(108, 80, 116);
+
+		text-transform: uppercase;
+		text-decoration: none;
+		padding: 0px 20px;
+		line-height: 40px;
+
+		transition: all 0.5s ease 0s;
+		&:hover {
+			transition: all 0.6s ease 0s;
+			background-color: rgb(93, 53, 104);
+		}
+
+		// Отменить расcтягивание на всю ширину:
+		justify-self: start;
+	}
+}
+
+//====================================================================================================
+
+.footer {
+	background-color: rgb(108, 80, 116);
+
+	display: grid;
+
+	// Присваиваем название:
+	grid-area: footer;
+
+	padding: 15px;
+
+	align-items: center;
+
+	// Задаем сетку:
+	grid-template: 1fr / 1fr minmax(auto, 300px) minmax(auto, 1100px) 1fr;
+
+	@media (max-width: 550px) {
+		grid-template: 1fr 1fr/ 1fr;
+		justify-items: center;
+	}
+
+	&__copy {
+		font-size: 20px;
+		color: rgb(0, 0, 0);
+
+		order: 2;
+		@media (min-width: 550px) {
+			grid-column: 2 / 3;
+			order: 1;
+		}
+	}
+
+	&__text {
+		font-size: 20px;
+		color: rgb(0, 0, 0);
+
+		text-align: right;
+
+		order: 1;
+		@media (min-width: 550px) {
+			grid-column: 3 / 4;
+			order: 2;
+		}
+	}
+}
+
+//====================================================================================================
+
+//</ОСНОВНОЙ БЛОК>====================================================================================================
